@@ -1,0 +1,33 @@
+# Multi-stage build for maximum security
+# Stage 1: Build dependencies
+FROM node:20-alpine AS dependencies
+
+# Update packages and install security updates
+RUN apk update && apk upgrade && apk add --no-cache dumb-init
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci --only=production && npm cache clean --force
+
+# Stage 2: Runtime with distroless image (most secure)
+FROM gcr.io/distroless/nodejs20-debian12
+
+# Copy dependencies from previous stage
+COPY --from=dependencies /app/node_modules ./node_modules
+
+# Copy source code
+COPY src ./src
+
+# Copy package.json for metadata
+COPY package.json ./
+
+# Expose port
+EXPOSE 8080
+
+# Start the application (distroless doesn't have shell, so no dumb-init needed)
+CMD ["src/index.js"]
