@@ -493,60 +493,7 @@ GET    /healthz                 # Health check
 GET    /readyz                  # Readiness check
 ```
 
-## 🌐 Deployment
 
-### Cloud Deployment Options
-
-#### 1. **Railway** (Recommended for demo)
-```bash
-# Install Railway CLI
-npm install -g @railway/cli
-
-# Login and deploy
-railway login
-railway init
-railway up
-```
-
-#### 2. **Vercel** (Frontend) + **Railway** (Backend)
-```bash
-# Deploy frontend to Vercel
-npx vercel --prod
-
-# Deploy backend to Railway
-railway deploy
-```
-
-#### 3. **Docker on Cloud Platforms**
-
-**AWS ECS/Fargate:**
-```bash
-# Build and push to ECR
-docker build -t smart-helpdesk .
-docker tag smart-helpdesk:latest <account>.dkr.ecr.<region>.amazonaws.com/smart-helpdesk:latest
-docker push <account>.dkr.ecr.<region>.amazonaws.com/smart-helpdesk:latest
-```
-
-**Google Cloud Run:**
-```bash
-# Build and deploy
-gcloud builds submit --tag gcr.io/<project>/smart-helpdesk
-gcloud run deploy --image gcr.io/<project>/smart-helpdesk --platform managed
-```
-
-### Environment Variables for Production
-
-```bash
-# Required for production
-JWT_SECRET=<strong-random-secret>
-MONGO_URI=<production-mongodb-uri>
-NODE_ENV=production
-
-# Optional but recommended
-CORS_ORIGIN=https://yourdomain.com
-CONFIDENCE_THRESHOLD=0.85
-AUTO_CLOSE_ENABLED=true
-```
 
 ### Security Checklist for Production
 
@@ -560,44 +507,6 @@ AUTO_CLOSE_ENABLED=true
 - [ ] Set up backup strategy
 - [ ] Review and test security headers
 
-## 🎥 Demo Video Script
-
-### Video Walkthrough (≤5 minutes)
-
-**Segment 1: Knowledge Base Setup (1 min)**
-1. Login as admin (`admin@helpdesk.local`)
-2. Navigate to Knowledge Base
-3. Create new article: "How to Reset Password"
-4. Add content and tags
-5. Save article
-
-**Segment 2: Ticket Creation (1 min)**
-1. Logout and login as user (`user@helpdesk.local`)
-2. Create new ticket: "I forgot my password"
-3. Add description with keywords
-4. Submit ticket
-
-**Segment 3: AI Agent Triage (1.5 min)**
-1. Login as agent (`agent@helpdesk.local`)
-2. View agent suggestions dashboard
-3. Show auto-classification result
-4. Review KB articles retrieved
-5. Examine generated response
-
-**Segment 4: Ticket Resolution (1.5 min)**
-1. Agent reviews and approves AI suggestion
-2. Optionally modify the response
-3. Send reply to user
-4. Mark ticket as resolved
-5. Show audit trail
-
-**Key Points to Highlight:**
-- Automatic ticket classification
-- Knowledge base integration
-- AI-generated responses
-- Human oversight and control
-- Complete audit trail
-- User-friendly interface
 
 ## 🏗️ Tech Stack Summary
 
